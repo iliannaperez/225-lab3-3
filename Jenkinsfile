@@ -65,17 +65,17 @@ pipeline {
             }
         }
     }
-
+    
     post {
-
-        success {
-            slackSend color: "good", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-        }
-        unstable {
-            slackSend color: "warning", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-        }
-        failure {
-            slackSend color: "danger", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-        }
+    success {
+        slackSend(channel: '#build-status', color: "good", message: "✅ Build Succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER}")
     }
+    unstable {
+        slackSend(channel: '#build-status', color: "warning", message: "⚠️ Build Unstable: ${env.JOB_NAME} #${env.BUILD_NUMBER}")
+    }
+    failure {
+        slackSend(channel: '#build-status', color: "danger", message: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}")
+    }
+}
+
 }
